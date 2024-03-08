@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-from weather import get_current_weather, degrees_to_compass
+from weather import get_current_weather, degrees_to_compass, compose_description
 from waitress import serve
 
 app = Flask(__name__)
@@ -22,7 +22,7 @@ def get_weather():
     return render_template(
         'weather.html',
         city=weather_data["name"],
-        description=weather_data["weather"][0]["description"],
+        description=compose_description(weather_data["weather"][0]["description"]),
         temp=f'{weather_data["main"]["temp"]:.1f}',
         feels_like=f'{weather_data["main"]["feels_like"]:.1f}',
         humidity=weather_data["main"]["humidity"],
